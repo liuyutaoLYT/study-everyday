@@ -1,7 +1,7 @@
 final Node<K,V> getNode(int hash, Object key) {
         Node<K,V>[] tab; Node<K,V> first, e; int n; K k;
         if ((tab = table) != null && (n = tab.length) > 0 &&
-            (first = tab[(n - 1) & hash]) != null) {
+            (first = tab[(n - 1) & hash]) != null) {//找到链表的第一个元素
             if (first.hash == hash && // always check first node
                 ((k = first.key) == key || (key != null && key.equals(k))))
                 return first;
@@ -17,3 +17,5 @@ final Node<K,V> getNode(int hash, Object key) {
         }
         return null;
     }
+ table 是用transient 修饰的一个字段，transient是类型修饰符，只能用来修饰字段。在对象序列化的过程中，标记为transient的变量不会被序列化。
+ 
