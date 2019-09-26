@@ -21,7 +21,7 @@ class Solution {
                     }
                 }else{
                     allString.add(a);
-                    a = a.substring(a.indexOf(s.charAt(i)+"")+1)+s.charAt(i);
+                    a = a.substring(a.indexOf(s.charAt(i)+"")+1)+s.charAt(i);//indexOf 下标从0开始，substring下标从1开始
                 }
                 
             }
