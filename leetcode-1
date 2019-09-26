@@ -1,0 +1,41 @@
+给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
+//核心思想：滑动窗口思想
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        if(s== null || s.length()==0){
+            return 0;
+        }
+        if(s.replace(" ","").length()==0){
+            return 1;
+        }
+        String a = "";
+        List<String> allString= new ArrayList();
+        for(int i=0;i<s.length();i++){
+            if(i==0){
+                a = ""+s.charAt(i);
+            }else{
+                if(!a.contains(s.charAt(i)+"")){
+                    a = a +s.charAt(i);
+                    if(i==s.length()-1){
+                        allString.add(a);
+                    }
+                }else{
+                    allString.add(a);
+                    a = a.substring(a.indexOf(s.charAt(i)+"")+1)+s.charAt(i);
+                }
+                
+            }
+        }
+        if(allString.size()>0){
+            int temp = allString.get(0).length();
+            for(String b:allString){
+                if(b.length()>temp){
+                    temp = b.length();
+                }
+            }
+            return temp;
+        }else{
+            return a.length();
+        }
+    }
+}
