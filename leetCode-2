@@ -1,0 +1,65 @@
+Q:给定两个大小为 m 和 n 的有序数组 nums1 和 nums2。
+
+请你找出这两个有序数组的中位数，并且要求算法的时间复杂度为 O(log(m + n))。
+
+你可以假设 nums1 和 nums2 不会同时为空。
+// 解题思路：有时间复杂度要求，不能是一个简单的双重循环，但是我们可以只循环长度比较长的那个数组， 把两个数组合并成一个新的数组，然后再去求他的中位数。
+class Solution {
+    public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int[] nums3  = new int[nums1.length+nums2.length];
+        if(nums1.length==0){
+            nums3 = nums2;
+            if(nums3.length%2==0){
+                int nums4 = nums3.length/2;
+                return (double)(nums3[nums4-1]+nums3[nums4])/2;
+            }else{
+                int nums4 = (nums3.length+1)/2;
+                return nums3[nums4-1];
+            }
+        }
+        if(nums2.length == 0){
+            nums3 = nums1;
+            if(nums3.length%2==0){
+                int nums4 = nums3.length/2;
+                return (double)(nums3[nums4-1]+nums3[nums4])/2;
+            }else{
+                int nums4 = (nums3.length+1)/2;
+                return nums3[nums4-1];
+            }
+        }
+        int i=0;
+        int j = 0;
+        int k = 0;
+        if(nums1.length<nums2.length) {
+        	int []temp = nums1;
+        	nums1 = nums2;
+        	nums2 = temp;
+        }
+        int s = nums1.length>nums2.length?nums1.length:nums2.length;
+        
+        while(i<s){
+          if(j>nums2.length-1 || nums1[i]<nums2[j]){
+              nums3[k] = nums1[i];
+              i++;
+              k++;
+          }else{
+              nums3[k] = nums2[j];
+              j++;
+              k++;
+          }
+        }
+        if(j<nums2.length) {
+        	for(int p = j;p<nums2.length;p++) {
+        		nums3[k] = nums2[p];
+        		k++;
+        	}
+        }
+        if(nums3.length%2==0){
+            int nums4 = nums3.length/2;
+            return (double)(nums3[nums4-1]+nums3[nums4])/2;
+        }else{
+            int nums4 = (nums3.length+1)/2;
+            return nums3[nums4-1];
+        }
+	}
+}
