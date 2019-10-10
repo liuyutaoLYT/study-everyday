@@ -1,0 +1,43 @@
+Q:给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为 1000。
+解题思路：作为一个菜鸡，刚开始如果想到的不是暴力法就不配称为一个合格的菜鸡，刚开始想到的就是找到所有的子串，放到一个数组中，
+从长到短开始判断他是否是一个回文串，这样的结果就是时间和控件全部不满足，然后我想到了找到最长的子串，不放到数组中，直接判断是不是回文串。
+这样导致的就是时间不足。
+最后想到的办法是 每一个字符 都可以是这个回文串的中心轴，再判断是奇数还是偶数，这样就去从头到尾循环每一个字符就可以
+代码实现：class Solution {
+    public String longestPalindrome(String s) {
+        if(s.equals("") || s.length()==1){
+            return s;
+        }
+        String ss = "";
+        int max = 0;
+        int len = s.length();
+        int begin = 0;
+        for(int i = 0;i<len;i++){
+            int left = i-1;
+            int right = i+1;
+            
+            while(left>=0 && right<len && s.charAt(left) == s.charAt(right) ){
+                if(right-left>max){
+                    max = right-left;
+                    begin = left;
+                }
+                left--;
+                right++;
+            }
+            left = i;
+            right = i+1;
+            
+            while(left>=0 && right<len && s.charAt(left) == s.charAt(right) ){
+                if(right-left>max){
+                    max = right-left;
+                    begin = left;
+                }
+                left--;
+                right++;
+            }
+            
+        }
+        return s.substring(begin,begin+max+1);
+    }   
+}
+写完之后从网上看到一个算法叫马拉车算法，以后会在写这个算法的解析（其实就是没看懂，如果有懂得大哥 欢迎发言）
