@@ -1,0 +1,30 @@
+import java.util.List;
+
+/*
+ * @lc app=leetcode.cn id=22 lang=java
+ *
+ * [22] 括号生成
+ */
+
+// @lc code=start
+class Solution {
+    public List<String> generateParenthesis(int n) {
+        List<String> result = new ArrayList<String>();
+        generateParenthesis(n,n,"",result);
+        return result;
+    }
+    private void generateParenthesis(int left,int right,String s,List<String> result){
+        if(right == 0 && left ==0){
+            result.add(s);
+            return;
+        }
+        if(left>0){
+            generateParenthesis(left-1,right,s+"(",result);
+        }
+        if(right>left && right>0 ){
+            generateParenthesis(left,right-1,s+")",result);
+        }
+    }
+}
+// @lc code=end
+
