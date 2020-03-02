@@ -1,0 +1,61 @@
+/*
+ * @lc app=leetcode.cn id=23 lang=java
+ *
+ * [23] 合并K个排序链表
+ */
+
+// @lc code=start
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        int k = 0;
+        if(lists.length==0){
+            return null;
+        }
+        if(lists.length%2==0){
+            k=lists.length/2;
+        }else{
+            k=(lists.length+1)/2;
+        }
+        ListNode[] list = lists;
+        for(int i = 0;i<k;i++){
+            list = mergeTwoLists(list);
+        }
+        return list[0];
+    }
+    public ListNode[] mergeTwoLists(ListNode[]list){
+        List<ListNode> result = new ArrayList<ListNode>();
+        for(int i = 0;i<list.length;i+=2){
+            ListNode preListNode = new ListNode(-1);
+            ListNode prev = preListNode;
+            if(i+1>=list.length){
+                result.add(list[i]);
+                return result.toArray(new ListNode[result.size()]);
+            }
+            ListNode l1 = list[i];
+            ListNode l2 = list[i+1];
+            while(l1!=null && l2!=null){
+                if(l1.val<l2.val){
+                    prev.next = l1;
+                    l1 = l1.next;
+                }else{
+                    prev.next = l2;
+                    l2 = l2.next;
+                }
+                prev = prev.next;
+            }
+            prev.next = l1==null?l2:l1;
+            result.add(preListNode.next);
+        }
+        return result.toArray(new ListNode[result.size()]);
+    }
+}
+// @lc code=end
+结题思路：和前两天的那个两两合并很相似 现在是k个；把k个分别两两合并就安排了
