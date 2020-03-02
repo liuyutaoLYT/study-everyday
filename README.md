@@ -1,2 +1,2 @@
 # study-everyday
-排序算法
+算法
