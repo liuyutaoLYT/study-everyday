@@ -1,2 +1,2 @@
 # study-everyday
-算法
+一日一算法，病魔远离我
