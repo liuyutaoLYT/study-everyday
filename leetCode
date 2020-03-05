@@ -1,0 +1,52 @@
+/*
+ * @lc app=leetcode.cn id=25 lang=java
+ *
+ * [25] K 个一组翻转链表
+ */
+
+// @lc code=start
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) {
+        ListNode preListNode = new ListNode(-1);
+        preListNode.next = head;
+        ListNode start = preListNode;
+        ListNode end = preListNode;
+        while(end.next!=null){
+            for(int i = 0;i<k&&end!=null;i++){
+                end = end.next;
+            }
+            if(end==null){
+                break;
+            }
+            ListNode L1 = start.next;
+            ListNode L2 = end.next;
+            end.next = null;
+            start.next = reverseList(L1);
+            L1.next = L2;
+            start = L1;
+            end = start;
+        }
+        return preListNode.next;
+    }
+    public ListNode reverseList(ListNode start){
+        ListNode pre = null;
+        ListNode curr = start;
+        while (curr != null) {
+            ListNode next = curr.next;
+            curr.next = pre;
+            pre = curr;
+            curr = next;
+        }
+        return pre;
+    }
+}
+// @lc code=end
+整体思路： start 是头 end 是第k*n 然后拿到这个范围里面的 直接翻转 然后再往下走 
