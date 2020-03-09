@@ -1,0 +1,38 @@
+给定一个二叉树和一个目标和，找到所有从根节点到叶子节点路径总和等于给定目标和的路径。
+
+说明: 叶子节点是指没有子节点的节点。
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List<List<Integer>> pathSum(TreeNode root, int sum) {
+        if(root == null){
+            return new ArrayList<>();
+        }
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        if(root.val == sum && root.left==null && root.right==null){
+            List<Integer> data = new ArrayList<Integer>();
+            data.add(root.val);
+            result.add(data);
+            return result;
+        }
+        List<List<Integer>> leftResult = pathSum(root.left,sum-root.val);
+        List<List<Integer>> rightResult = pathSum(root.right,sum-root.val);
+        for(List<Integer>left:leftResult){
+            left.add(0,root.val);
+            result.add(left);
+        }
+        for(List<Integer>right:rightResult){
+            right.add(0,root.val);
+            result.add(right);
+        }
+        return result;
+    }
+}
+解题思路：经典的深度优先遍历问题
