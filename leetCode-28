@@ -1,0 +1,31 @@
+/*
+ * @lc app=leetcode.cn id=28 lang=java
+ *
+ * [28] 实现 strStr()
+ */
+
+// @lc code=start
+class Solution {
+    public int strStr(String haystack, String needle) {
+        if(needle==null || needle.length()==0){
+            return 0;
+        }
+        if(haystack.equals(needle)){
+            return 0;
+        }
+        int length = needle.length();
+        for(int i=0;i<haystack.length();i++){
+            if(i+length>haystack.length()){
+                return -1;
+            }
+            String temp = haystack.substring(i, i+length);
+            if(temp.equals(needle)){
+                return i;
+            }
+        }
+        return -1;
+    }
+}
+// @lc code=end
+
+有更优解 kmp算法
