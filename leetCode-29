@@ -1,0 +1,50 @@
+/*
+ * @lc app=leetcode.cn id=29 lang=java
+ *
+ * [29] 两数相除
+ */
+
+// @lc code=start
+class Solution {
+    public int divide(int dividend, int divisor) {
+        if (dividend == Integer.MIN_VALUE && divisor == -1) return Integer.MAX_VALUE;
+        // dividend = -2^31, divisor = -2^31, dividend/divisor = 1
+        if (dividend == Integer.MIN_VALUE && divisor == Integer.MIN_VALUE) return 1;
+        // dividend != -2^31, divisor = -2^31, dividend/divisor = 0
+        if (divisor == Integer.MIN_VALUE) return 0;
+        // dividend = -2^31, divisor != -2^31:  dividend <= dividend + abs(divisor), fix = divisor > 0 ? -1 : 1
+        int fix = 0;
+        if (dividend == Integer.MIN_VALUE) {
+            if (divisor > 0) {
+                dividend += divisor;
+                fix = -1;
+            } else {
+                dividend -= divisor;
+                fix = 1;
+            }
+        }
+        boolean neg = false;
+        if (dividend < 0) {
+            dividend = -dividend;
+            neg = !neg;
+        }
+        if (divisor < 0) {
+            divisor = -divisor;
+            neg = !neg;
+        }
+        int result = 0;
+        while (dividend >= divisor) {
+            int x = divisor;
+            int r = 1;
+            while (x <= (dividend>>1)) {
+                x <<= 1;
+                r <<= 1;
+            }
+            dividend -= x;
+            result += r;
+        }
+        return (neg ? -result : result) + fix;
+    }
+}
+// @lc code=end
+位运算
