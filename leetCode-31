@@ -1,0 +1,42 @@
+/*
+ * @lc app=leetcode.cn id=31 lang=java
+ *
+ * [31] 下一个排列
+ */
+
+// @lc code=start
+class Solution {
+    public void nextPermutation(int[] nums) {
+        if(nums.length<2){
+            return;
+        }
+        int i = nums.length-2;
+        while(i>=0 && nums[i]>=nums[i+1]){
+            i--;
+        }
+        if(i>=0){
+            int j = nums.length-1;
+            while(j>0 && nums[j]<=nums[i]){
+                j--;
+            }
+            swap(nums,i,j);
+        }
+        resover(nums,i+1);
+    }
+    public void resover(int[]nums,int start){
+        int i = start;
+        int j = nums.length-1;
+        while(i<j){
+            swap(nums,i,j);
+            i++;
+            j--;
+        }
+    }
+    public void swap(int[]nums,int i,int j){
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+}
+// @lc code=end
+从后往前找，找到有比后一位小的 就可以停，然后再从后往前找 找到比标示位大的停 然后交换位置 把标示位侯的数字重新置成升序
