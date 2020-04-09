@@ -1,0 +1,38 @@
+```
+import java.util.List;
+
+/*
+ * @lc app=leetcode.cn id=46 lang=java
+ *
+ * [46] 全排列
+ */
+
+// @lc code=start
+class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        int len = nums.length;
+        boolean[]used = new boolean[len];
+        List<Integer>path = new ArrayList<>();
+        dfs(nums,len,0,path,used,result);
+        return result;
+    }
+    public void dfs(int[]nums,int len,int depth,List<Integer>path,boolean[]used,List<List<Integer>>result){
+        if(depth==len){
+            result.add(new ArrayList<>(path));
+            return;
+        }
+        for(int i = 0 ;i<len;i++){
+            if(!used[i]){
+                path.add(nums[i]);
+                used[i] = true;
+                dfs(nums, len, depth+1, path, used, result);
+                used[i] = false;
+                path.remove(path.size()-1);
+            }
+        }
+    }
+}
+// @lc code=end
+```
+解题思路：想想成一个属性，做一次深度优先遍历 giao~
