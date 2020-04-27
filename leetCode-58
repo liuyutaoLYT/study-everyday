@@ -1,0 +1,67 @@
+```
+/*
+ * @lc app=leetcode.cn id=57 lang=java
+ *
+ * [57] 插入区间
+ */
+
+// @lc code=start
+class Solution {
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        int [][] finalIntervals = newInterval.length==0?intervals:new int [intervals.length+1][2];
+        if(finalIntervals.length>intervals.length){
+            for(int i = 0;i<finalIntervals.length;i++){
+                if(i==finalIntervals.length-1){
+                    finalIntervals[i] = newInterval;
+
+                }else{
+                    finalIntervals[i] = intervals[i];
+                }
+            }
+            int j = finalIntervals.length-1;
+            while(j>0 && finalIntervals[j][0]<finalIntervals[j-1][0]){
+                int [] temp = finalIntervals[j-1];
+                finalIntervals[j-1] = finalIntervals[j];
+                finalIntervals[j] = temp;
+                j--;
+            }
+        }
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        if (finalIntervals.length < 2) {
+            return finalIntervals;
+        }
+        for(int i = 0;i<finalIntervals.length;i++){
+            int left = finalIntervals[i][0];
+            int right = finalIntervals[i][1];
+            if(result.size()>0 && right<=result.get(result.size()-1).get(1) && left>=result.get(result.size()-1).get(0)){
+                continue;
+            }
+            int maxright = finalIntervals[i][1];
+            int minleft = finalIntervals[i][0];
+            for(int j = i;j<finalIntervals.length;j++){
+                if((maxright>=finalIntervals[j][0] && finalIntervals[j][1]>=maxright) || (minleft>=finalIntervals[j][0] && minleft<=finalIntervals[j][1])){
+                    if(finalIntervals[j][1]>=maxright){
+                        maxright = finalIntervals[j][1];
+                    }
+                    if(minleft>=finalIntervals[j][0]){
+                        minleft = finalIntervals[j][0];
+                    }
+                }
+            }
+            List<Integer>oneResult = new ArrayList<Integer>();
+            oneResult.add(minleft);
+            oneResult.add(maxright);
+            result.add(oneResult);
+        }
+        int [][]res = new int[result.size()][2];
+        for(int i=0;i<result.size();i++){
+            res[i][0] = result.get(i).get(0);
+            res[i][1] = result.get(i).get(1); 
+        }
+        return res;
+    }
+}
+// @lc code=end
+
+```
+先插入到最后一个位置 然后排个序 然后贪心算法
